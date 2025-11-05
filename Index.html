@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang=”en”>
+<head>
+    <meta charset=”UTF-8”>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1.0”>
+    <title>Merge Sort E-Commerce Price Sorter</title>
+    <style>
+•	{
+            Margin: 0;
+            Padding: 0;
+            Box-sizing: border-box;
+            Font-family: ‘Segoe UI’, Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        Body {
+            Background-color: #f5f7fa;
+            Color: #333;
+            Line-height: 1.6;
+        }
+
+        .container {
+            Max-width: 1200px;
+            Margin: 0 auto;
+            Padding: 20px;
+        }
+
+        Header {
+            Text-align: center;
+            Margin-bottom: 40px;
+            Padding: 20px;
+            Background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            Color: white;
+            Border-radius: 10px;
+            Box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        H1 {
+            Font-size: 2.5rem;
+            Margin-bottom: 10px;
+        }
+
+        .subtitle {
+            Font-size: 1.2rem;
+            Opacity: 0.9;
+        }
+
+        .content {
+            Display: grid;
+            Grid-template-columns: 1fr 1fr;
+            Gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                Grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            Background: white;
+            Border-radius: 10px;
+            Padding: 25px;
+            Box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .panel h2 {
+            Margin-bottom: 20px;
+            Color: #2575fc;
+            Border-bottom: 2px solid #f0f0f0;
+            Padding-bottom: 10px;
+        }
+
+        .input-section {
+            Margin-bottom: 20px;
+        }
+
+        Label {
+            Display: block;
+            Margin-bottom: 8px;
+            Font-weight: 600;
+        }
+
+        Textarea {
+            Width: 100%;
+            Padding: 12px;
+            Border: 1px solid #ddd;
+            Border-radius: 5px;
+            Resize: vertical;
+            Font-size: 16px;
+            Margin-bottom: 15px;
+        }
+
+        .buttons {
+            Display: flex;
+            Gap: 10px;
+            Flex-wrap: wrap;
+        }
+
+        Button {
+            Padding: 12px 20px;
+            Border: none;
+            Border-radius: 5px;
+            Cursor: pointer;
+            Font-weight: 600;
+            Transition: all 0.3s ease;
+        }
+
+        .primary-btn {
+            Background-color: #2575fc;
+            Color: white;
+        }
+
+        .primary-btn:hover {
+            Background-color: #1a68e8;
+            Transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            Background-color: #f0f0f0;
+            Color: #333;
+        }
+
+        .secondary-btn:hover {
+            Background-color: #e0e0e0;
+        }
+
+        .product-list {
+            Margin-top: 20px;
+        }
+
+        .product-item {
+            Display: flex;
+            Justify-content: space-between;
+            Padding: 15px;
+            Border: 1px solid #eee;
+            Border-radius: 5px;
+            Margin-bottom: 10px;
+            Background-color: #f9f9f9;
+            Transition: all 0.3s ease;
+        }
+
+        .product-item:hover {
+            Transform: translateX(5px);
+            Box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-name {
+            Font-weight: 600;
+        }
+
+        .product-price {
+            Color: #2575fc;
+            Font-weight: 600;
+        }
+
+        .algorithm-info {
+            Margin-top: 20px;
+            Background-color: #f8f9fa;
+            Padding: 15px;
+            Border-radius: 5px;
+            Border-left: 4px solid #2575fc;
+        }
+
+        .algorithm-info h3 {
+            Margin-bottom: 10px;
+        }
+
+        .code-section {
+            Background-color: #2d2d2d;
+            Color: #f8f8f2;
+            Padding: 20px;
+            Border-radius: 5px;
+            Overflow-x: auto;
+            Margin-top: 20px;
+        }
+
+        .code-section pre {
+            White-space: pre-wrap;
+        }
+
+        .sort-stats {
+            Margin-top: 20px;
+            Padding: 15px;
+            Background-color: #e8f4fd;
+            Border-radius: 5px;
+            Border-left: 4px solid #2575fc;
+        }
+
+        .highlight {
+            Background-color: #fffacd;
+            Padding: 2px 4px;
+            Border-radius: 3px;
+        }
+
+        .step-indicator {
+            Display: inline-block;
+            Background-color: #2575fc;
+            Color: white;
+            Width: 24px;
+            Height: 24px;
+            Border-radius: 50%;
+            Text-align: center;
+            Line-height: 24px;
+            Margin-right: 10px;
+        }
+
+        Footer {
+            Text-align: center;
+            Margin-top: 40px;
+            Padding: 20px;
+            Color: #777;
+            Font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class=”container”>
+        <header>
+            <h1>Merge Sort E-Commerce Price Sorter</h1>
+            <p class=”subtitle”>Visualize how the merge sort algorithm organizes product prices</p>
+        </header>
+
+        <div class=”content”>
+            <div class=”panel”>
+                <h2>Product Price Sorter</h2>
+                
+                <div class=”input-section”>
+                    <label for=”products”>Enter products with prices (one per line, format: Product Name, Price):</label>
+                    <textarea id=”products” rows=”10” placeholder=”iPhone 14, 999.99
+Samsung Galaxy S23, 849.99
+Google Pixel 7, 599.99
+MacBook Pro, 1299.99
+Dell XPS 13, 999.99
+Sony Headphones, 349.99”>iPhone 14, 999.99
+Samsung Galaxy S23, 849.99
+Google Pixel 7, 599.99
+MacBook Pro, 1299.99
+Dell XPS 13, 999.99
+Sony Headphones, 349.99</textarea>
+                </div>
+
+                <div class=”buttons”>
+                    <button id=”sortBtn” class=”primary-btn”>Sort Prices (Low to High)</button>
+                    <button id=”resetBtn” class=”secondary-btn”>Reset</button>
+                    <button id=”addRandomBtn” class=”secondary-btn”>Add Random Products</button>
+                </div>
+
+                <div class=”sort-stats” id=”stats”>
+                    <p>Enter products and click “Sort Prices” to see the merge sort in action.</p>
+                </div>
+
+                <div class=”product-list” id=”productList”>
+                    <!—Products will be displayed here 
+                </div>
+            </div>
+
+            <div class=”panel”>
+                <h2>Merge Sort Algorithm</h2>
+                
+                <div class=”algorithm-info”>
+                    <h3>How Merge Sort Works</h3>
+                    <p><span class=”step-indicator”>1</span> Divide the unsorted list into n sublists, each containing one element</p>
+                    <p><span class=”step-indicator”>2</span> Repeatedly merge sublists to produce new sorted sublists until there is only one sublist remaining</p>
+                    <p><span class=”step-indicator”>3</span> This final sublist is the sorted list</p>
+                    <p><strong>Time Complexity:</strong> O(n log n) in all cases</p>
+                    <p><strong>Space Complexity:</strong> O(n)</p>
+                </div>
+
+                <h3>JavaScript Implementation</h3>
+                <div class=”code-section”>
+                    <pre id=”jsCode”>// Merge Sort Implementation in JavaScript
+Function mergeSort(arr) {
+    If (arr.length <= 1) return arr;
+    
+    Const mid = Math.floor(arr.length / 2);
+    Const left = mergeSort(arr.slice(0, mid));
+    Const right = mergeSort(arr.slice(mid));
+    
+    Return merge(left, right);
+}
+
+Function merge(left, right) {
+    Let result = [];
+    Let I = 0, j = 0;
+    
+    While (I < left.length && j < right.length) {
+        If (left[i].price <= right[j].price) {
+            Result.push(left[i]);
+            I++;
+        } else {
+            Result.push(right[j]);
+            J++;
+        }
+    }
+    
+    Return result.concat(left.slice(i)).concat(right.slice(j));
+}</pre>
+                </div>
+
+                <h3>C Implementation</h3>
+                <div class=”code-section”>
+                    <pre id=”cCode”>// Merge Sort Implementation in C
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+Typedef struct {
+    Char name[50];
+    Float price;
+} Product;
+
+Void merge(Product arr[], int l, int m, int r) {
+    Int I, j, k;
+    Int n1 = m – l + 1;
+    Int n2 = r – m;
+
+    Product L[n1], R[n2];
+
+    For (I = 0; I < n1; i++)
+        L[i] = arr[l + i];
+    For (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    I = 0;
+    J = 0;
+    K = l;
+    
+    While (I < n1 && j < n2) {
+        If (L[i].price <= R[j].price) {
+            Arr[k] = L[i];
+            I++;
+        } else {
+            Arr[k] = R[j];
+            J++;
+        }
+        K++;
+    }
+
+    While (I < n1) {
+        Arr[k] = L[i];
+        I++;
+        K++;
+    }
+
+    While (j < n2) {
+        Arr[k] = R[j];
+        J++;
+        K++;
+    }
+}
+
+Void mergeSort(Product arr[], int l, int r) {
+    If (l < r) {
+        Int m = l + (r – l) / 2;
+
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+
+        merge(arr, l, m, r);
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Merge Sort E-Commerce Price Sorter &copy; 2023 | Algorithm Visualization Tool</p>
+        </footer>
+    </div>
+
+    <script>
+        Document.addEventListener(‘DOMContentLoaded’, function() {
+            Const productsTextarea = document.getElementById(‘products’);
+            Const sortBtn = document.getElementById(‘sortBtn’);
+            Const resetBtn = document.getElementById(‘resetBtn’);
+            Const addRandomBtn = document.getElementById(‘addRandomBtn’);
+            Const productList = document.getElementById(‘productList’);
+            Const stats = document.getElementById(‘stats’);
+            
+            Let products = [];
+            Let originalProducts = [];
+            
+            // Parse products from textarea
+            Function parseProducts() {
+                Const lines = productsTextarea.value.split(‘\n’);
+                Products = [];
+                
+                For (const line of lines) {
+                    If (line.trim() === ‘’) continue;
+                    
+                    Const parts = line.split(‘,’);
+                    If (parts.length >= 2) {
+                        Const name = parts[0].trim();
+                        Const price = parseFloat(parts[1].trim());
+                        
+                        If (!isNaN(price)) {
+                            Products.push({ name, price });
+                        }
+                    }
+                }
+                
+                originalProducts = […products];
+                displayProducts(products);
+            }
+            
+            // Display products in the product list
+            Function displayProducts(productsToDisplay) {
+                productList.innerHTML = ‘’;
+                
+                if (productsToDisplay.length === 0) {
+                    productList.innerHTML = ‘<p>No products to display.</p>’;
+                    return;
+                }
+                
+                productsToDisplay.forEach(product => {
+                    const productElement = document.createElement(‘div’);
+                    productElement.className = ‘product-item’;
+                    productElement.innerHTML = `
+                        <span class=”product-name”>${product.name}</span>
+                        <span class=”product-price”>$${product.price.toFixed(2)}</span>
+                    `;
+                    productList.appendChild(productElement);
+                });
+            }
+            
+            // Merge Sort Implementation
+            Function mergeSort(arr) {
+                If (arr.length <= 1) return arr;
+                
+                Const mid = Math.floor(arr.length / 2);
+                Const left = mergeSort(arr.slice(0, mid));
+                Const right = mergeSort(arr.slice(mid));
+                
+                Return merge(left, right);
+            }
+            
+            Function merge(left, right) {
+                Let result = [];
+                Let I = 0, j = 0;
+                
+                While (I < left.length && j < right.length) {
+                    If (left[i].price <= right[j].price) {
+                        Result.push(left[i]);
+                        I++;
+                    } else {
+                        Result.push(right[j]);
+                        J++;
+                    }
+                }
+                
+                Return result.concat(left.slice(i)).concat(right.slice(j));
+            }
+            
+            // Sort products
+            Function sortProducts() {
+                If (products.length === 0) {
+                    Stats.innerHTML = ‘<p>Please add some products first.</p>’;
+                    Return;
+                }
+                
+                Const startTime = performance.now();
+                Const sortedProducts = mergeSort(products);
+                Const endTime = performance.now();
+                
+                Products = sortedProducts;
+                displayProducts(products);
+                
+                const timeTaken = (endTime – startTime).toFixed(2);
+                stats.innerHTML = `
+                    <p>Sorted <span class=”highlight”>${products.length}</span> products in <span class=”highlight”>${timeTaken} milliseconds</span> using Merge Sort.</p>
+                    <p>Time Complexity: O(n log n) | Space Complexity: O(n)</p>
+                `;
+            }
+            
+            // Reset to original products
+            Function resetProducts() {
+                Products = […originalProducts];
+                displayProducts(products);
+                stats.innerHTML = ‘<p>Products reset to original order.</p>’;
+            }
+            
+            // Add random products
+            Function addRandomProducts() {
+                Const randomProducts = [
+                    { name: “Wireless Earbuds”, price: 79.99 },
+                    { name: “Smart Watch”, price: 199.99 },
+                    { name: “Tablet”, price: 329.99 },
+                    { name: “Gaming Console”, price: 499.99 },
+                    { name: “Digital Camera”, price: 649.99 },
+                    { name: “Bluetooth Speaker”, price: 89.99 }
+                ];
+                
+                // Add 2 random products
+                Const random1 = randomProducts[Math.floor(Math.random() * randomProducts.length)];
+                Const random2 = randomProducts[Math.floor(Math.random() * randomProducts.length)];
+                
+                Products.push(random1, random2);
+                originalProducts = […products];
+                
+                productsTextarea.value += `\n${random1.name}, ${random1.price}\n${random2.name}, ${random2.price}`;
+                
+                displayProducts(products);
+                stats.innerHTML = `<p>Added ${random1.name} and ${random2.name} to the product list.</p>`;
+            }
+            
+            // Event listeners
+            sortBtn.addEventListener(‘click’, sortProducts);
+            resetBtn.addEventListener(‘click’, resetProducts);
+            addRandomBtn.addEventListener(‘click’, addRandomProducts);
+            productsTextarea.addEventListener(‘input’, parseProducts);
+            
+            // Initialize
+            parseProducts();
+        });
+    </script>
+</body>
+</html
+
